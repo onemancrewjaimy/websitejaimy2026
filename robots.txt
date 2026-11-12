@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /portaal/
+
+Sitemap: https://onemancrew.nl/sitemap.xml
