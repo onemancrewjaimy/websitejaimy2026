@@ -71,7 +71,12 @@ function initReels() {
     reel.classList.add('is-active');
     reel.querySelector('[data-reel-toggle]')?.setAttribute('aria-pressed', 'true');
     if (!video || !video.dataset.src || motion.reduced) return; // placeholder: alleen de poster
-    if (!video.src) video.src = video.dataset.src;
+    if (!video.src) {
+      video.src = video.dataset.src;
+      // Eerste keer: begin op het moment van de thumbnail, zodat het beeld niet verspringt
+      const start = Number(video.dataset.start);
+      if (start > 0) video.currentTime = start;
+    }
     video
       .play()
       .then(() => reel.classList.add('is-playing'))
