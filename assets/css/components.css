@@ -761,3 +761,17 @@ html:not(.js) .player .viewfinder {
   padding-top: 0;
   border-top: 0;
 }
+
+/* Telefoon: logo in het midden van de navigatiebalk, menuknop rechts */
+@media (max-width: 639px) {
+  .nav__pill {
+    position: relative;
+  }
+
+  .nav__pill .wordmark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
