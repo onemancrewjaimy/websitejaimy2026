@@ -5,14 +5,14 @@
  * zijn eigen veld en het eerste foute veld krijgt de focus.
  *
  * Versturen gaat op één van twee manieren:
- * 1. Staat er een adres in data-endpoint op het <form> (bijvoorbeeld van
- *    Formspree: data-endpoint="https://formspree.io/f/..."), dan gaat de
- *    aanvraag daarheen en verschijnt de bevestiging pas na een geslaagd
- *    antwoord.
- * 2. Zonder data-endpoint opent het e-mailprogramma van de bezoeker met een
- *    ingevulde mail aan het adres in het action-attribuut (mailto:). Er
- *    verschijnt dan geen "verstuurd"-melding, want de bezoeker verstuurt de
- *    mail zelf.
+ * 1. Via Web3Forms: het <form> heeft data-endpoint en een ingevulde
+ *    toegangssleutel in het verborgen veld access_key. De aanvraag komt dan
+ *    direct als e-mail binnen en de bevestiging verschijnt pas na een
+ *    geslaagd antwoord van Web3Forms.
+ * 2. Noodoplossing zonder sleutel: het e-mailprogramma van de bezoeker opent
+ *    met een ingevulde mail aan het adres in het action-attribuut (mailto:).
+ *    Er verschijnt dan geen "verstuurd"-melding, want de bezoeker verstuurt
+ *    de mail zelf.
  */
 const RULES = {
   name: (value) => (value.trim().length >= 2 ? '' : 'Vul je naam in.'),
@@ -80,11 +80,13 @@ export function initForm(form) {
     }
 
     const data = Object.fromEntries(new FormData(form).entries());
-    const endpoint = form.dataset.endpoint;
+    const accessKey = (data.access_key || '').trim();
+    // Zonder toegangssleutel kan Web3Forms niets versturen: dan de noodoplossing
+    const endpoint = accessKey ? form.dataset.endpoint : '';
+    const subject = `Kennismaking: ${TYPE_LABELS[data.videoType] || 'video'}${data.company ? ` voor ${data.company}` : ''}`;
 
     if (!endpoint) {
       const address = form.getAttribute('action').replace(/^mailto:/, '');
-      const subject = `Kennismaking: ${TYPE_LABELS[data.videoType] || 'video'}${data.company ? ` voor ${data.company}` : ''}`;
       window.location.href = `mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody(data))}`;
       setStatus('Je e-mailprogramma opent met je aanvraag. Verstuur de mail om hem af te ronden.');
       return;
@@ -93,12 +95,32 @@ export function initForm(form) {
     submit.disabled = true;
     const sending = setTimeout(() => setStatus('Bezig met versturen'), 300);
     try {
+      // Web3Forms zet deze velden als regels in de e-mail; "email" wordt het antwoordadres
+      const payload = {
+        access_key: accessKey,
+        subject,
+        from_name: 'Website ONEMANCREW',
+        Naam: data.name,
+        email: data.email,
+        'Type video': TYPE_LABELS[data.videoType] || data.videoType,
+        Toelichting: data.message,
+      };
+      if (data.company) payload.Bedrijf = data.company;
+      if (data.phone) payload.Telefoon = data.phone;
+      // Alleen een spamrobot vinkt het verborgen veld aan; Web3Forms weigert het bericht dan
+      if (form.elements.botcheck?.checked) payload.botcheck = 'on';
+
+      // Als formuliergegevens, zodat de browser het verzoek zonder extra controle vooraf verstuurt
+      const body = new FormData();
+      Object.entries(payload).forEach(([key, value]) => body.append(key, value));
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { Accept: 'application/json' },
-        body: new FormData(form),
+        body,
       });
-      if (!response.ok) throw new Error(String(response.status));
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.success === false) throw new Error(String(response.status));
       form.reset();
       setStatus('Je aanvraag is verstuurd. Ik reageer binnen 1 werkdag.');
     } catch (error) {

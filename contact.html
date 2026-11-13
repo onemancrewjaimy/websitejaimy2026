@@ -137,11 +137,14 @@
           </div>
 
           <div class="contact__form">
-            <!-- Formulier-koppeling: zie assets/js/form.js.
-                 Zonder data-endpoint opent het e-mailprogramma van de bezoeker met de
-                 ingevulde aanvraag. Met een formulierdienst (bijvoorbeeld Formspree) zet je
-                 het adres in data-endpoint op dit <form>; dan wordt de aanvraag direct verstuurd. -->
-            <form class="glass form" data-contact-form action="mailto:contact@onemancrew.nl" method="post" enctype="text/plain">
+            <!-- Het formulier verstuurt de aanvraag direct via Web3Forms (data-endpoint).
+                 De toegangssleutel staat in het verborgen veld access_key. Zolang dat veld
+                 leeg is, opent als noodoplossing het e-mailprogramma van de bezoeker. -->
+            <form class="glass form" data-contact-form data-endpoint="https://api.web3forms.com/submit" action="mailto:contact@onemancrew.nl" method="post" enctype="text/plain">
+              <!-- WEB3FORMS: plak hier de toegangssleutel (access key) van web3forms.com -->
+              <input type="hidden" name="access_key" value="">
+              <!-- Valkuil voor spamrobots: mensen zien dit veld niet en laten het leeg -->
+              <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none">
               <div class="form__row">
                 <div class="field">
                   <label for="contact-name">Naam</label>
