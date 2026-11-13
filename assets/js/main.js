@@ -34,6 +34,10 @@ if (hero && hero.querySelector('[data-hero-canvas]')) {
   observer.observe(hero);
 }
 
+if (document.querySelector('[data-home]')) {
+  import('./home.js').then(({ initHome }) => initHome());
+}
+
 const fan = document.querySelector('[data-fan]');
 if (fan) {
   Promise.all([import('./portfolio-3d.js'), import('./filters.js')]).then(([{ initFan }, { initFilters }]) => {

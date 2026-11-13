@@ -1,0 +1,800 @@
+/* ONEMANCREW — homepage "Eén doorlopende take"
+   Alleen geladen op index.html. Bouwt op tokens.css, base.css en components.css;
+   de andere pagina's gebruiken dit bestand niet. */
+
+/* ---------- 01 Hero: showreel, één kop, één knop ---------- */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 900ms var(--ease);
+}
+
+.hero__video.is-on {
+  opacity: 1;
+}
+
+.take-hero__inner {
+  display: grid;
+  justify-items: start;
+  gap: clamp(24px, 4vh, 40px);
+  padding-bottom: clamp(44px, 8vh, 80px);
+}
+
+.take-hero h1 {
+  max-width: 11ch;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .take-hero__cta {
+    animation: hero-fade 520ms var(--ease-enter) 380ms both;
+  }
+}
+
+@media (max-width: 639px) {
+  .take-hero__inner {
+    padding-bottom: 36px;
+  }
+
+  .take-hero__cta {
+    width: 100%;
+  }
+}
+
+/* ---------- Scènes: elk één scherm, één kop, één zin ---------- */
+.scene {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding: var(--pad-top) 0 var(--pad-bottom);
+}
+
+.scene__head {
+  max-width: 46rem;
+  margin-bottom: clamp(32px, 6vh, 56px);
+}
+
+.scene__head .lead {
+  margin-top: var(--s-4);
+}
+
+.scene__head--row {
+  max-width: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-5) var(--s-7);
+}
+
+/* Op telefoons bepaalt de inhoud de hoogte, zodat er geen lege schermen ontstaan */
+@media (max-width: 899px) {
+  .scene {
+    min-height: 0;
+    padding: var(--s-9) 0;
+  }
+}
+
+/* ---------- 02 Diensten: videokaarten ---------- */
+.reels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-5);
+}
+
+.reel {
+  position: relative;
+  height: clamp(340px, 52svh, 540px);
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--glass-line);
+  background: #111;
+  box-shadow: 0 40px 80px -48px rgba(0, 0, 0, 0.9);
+  --vf-inset: 16px;
+  --vf-size: 20px;
+  transition: border-color 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.reel__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.reel__media img,
+.reel__media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reel__media img {
+  transition: transform var(--m-image) var(--ease);
+}
+
+.reel__media video {
+  opacity: 0;
+  transition: opacity 320ms var(--ease);
+}
+
+.reel.is-playing .reel__media video {
+  opacity: 1;
+}
+
+/* Donker verloop onder de tekst */
+.reel__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(18, 17, 16, 0.94) 0%, rgba(18, 17, 16, 0.62) 30%, rgba(18, 17, 16, 0) 62%);
+}
+
+.reel .viewfinder,
+.reel__rec {
+  opacity: 0;
+  transition: opacity 180ms var(--ease);
+}
+
+.reel__rec {
+  position: absolute;
+  z-index: 2;
+  top: 26px;
+  left: 30px;
+  pointer-events: none;
+}
+
+.reel.is-active .viewfinder,
+.reel.is-active .reel__rec {
+  opacity: 1;
+}
+
+.reel__info {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+  padding: clamp(20px, 2.2vw, 30px);
+  pointer-events: none;
+}
+
+.reel__info h3 {
+  font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+  font-weight: 500;
+}
+
+.reel__info p {
+  font-weight: 500;
+  color: var(--c-amber);
+}
+
+.reel__link {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: var(--s-2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  transition: color var(--m-in) var(--ease);
+}
+
+.reel__link .arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--m-in) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reel:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.34);
+  }
+
+  .reel:hover .reel__media img {
+    transform: scale(1.03);
+  }
+
+  .reel__link:hover {
+    color: var(--c-ink);
+  }
+
+  .reel__link:hover .arrow {
+    transform: translateX(3px);
+  }
+}
+
+@media (max-width: 899px) {
+  .reels {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+
+  .reel {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ---------- 03 Resultaat: één rij grote cijfers ---------- */
+.figures {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-7) var(--s-5);
+}
+
+.figure {
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+}
+
+.figure__num {
+  display: flex;
+  align-items: baseline;
+  gap: 0.08em;
+  font-size: clamp(3.5rem, 7.4vw, 7rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+.figure__num small {
+  font-size: 0.36em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--c-accent-hi);
+}
+
+.figure__note {
+  font-size: var(--t-lead);
+  line-height: 1.35;
+  color: var(--c-ink);
+  max-width: 14rem;
+}
+
+@media (max-width: 899px) {
+  .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-7) var(--s-4);
+  }
+}
+
+/* "Meer lezen"-uitklap */
+.more {
+  margin-top: clamp(32px, 6vh, 56px);
+}
+
+.more__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--m-in) var(--ease), border-color var(--m-in) var(--ease);
+}
+
+.more__toggle::-webkit-details-marker {
+  display: none;
+}
+
+.more__toggle::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  transition: transform 200ms var(--ease);
+}
+
+.more[open] .more__toggle::after {
+  transform: rotate(45deg);
+}
+
+.more__open,
+.more[open] .more__closed {
+  display: none;
+}
+
+.more[open] .more__open {
+  display: inline;
+}
+
+.more__toggle:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.more__body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-6) var(--s-7);
+  margin-top: var(--s-6);
+}
+
+.more__title {
+  margin-bottom: var(--s-4);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--c-amber);
+}
+
+.more__list {
+  display: grid;
+  gap: var(--s-4);
+  color: var(--c-ink-soft);
+  max-width: 34rem;
+}
+
+.more__list strong {
+  font-weight: 500;
+  color: var(--c-ink);
+}
+
+@media (max-width: 899px) {
+  .more__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- 04 Werk ---------- */
+.work-stage {
+  position: relative;
+}
+
+.work-stage .player {
+  width: min(100%, calc((100svh - 390px) * 16 / 9));
+  min-width: min(100%, 560px);
+  margin-inline: auto;
+}
+
+@media (max-width: 899px) {
+  .work-stage .player {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .scene__head--row .btn-row {
+    width: 100%;
+  }
+}
+
+/* ---------- 05 Werkwijze: vier regels ---------- */
+.shots {
+  display: grid;
+  gap: clamp(20px, 4vh, 40px);
+}
+
+.shots > li {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 5fr) minmax(0, 7fr);
+  align-items: baseline;
+  gap: var(--s-2) var(--s-5);
+}
+
+.shots__num {
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-amber);
+}
+
+.shots h3 {
+  font-size: clamp(1.5rem, 2.9vw, 2.6rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.shots p {
+  font-size: var(--t-lead);
+  line-height: 1.45;
+  color: var(--c-ink-soft);
+}
+
+@media (max-width: 899px) {
+  .shots > li {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .shots p {
+    grid-column: 2;
+  }
+}
+
+/* ==========================================================================
+   FASE 2 — Eén doorlopende take
+   ========================================================================== */
+
+/* ---------- Eén achtergrond: geen kleurwissels of lijnen tussen secties ---------- */
+.take-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--c-bg);
+}
+
+.take-bg i {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.take-bg__warm {
+  width: 78vmax;
+  aspect-ratio: 1;
+  top: -34vmax;
+  right: -30vmax;
+  background: radial-gradient(closest-side, rgba(208, 115, 53, 0.34), rgba(208, 115, 53, 0.1) 55%, transparent);
+}
+
+.take-bg__cool {
+  width: 62vmax;
+  aspect-ratio: 1;
+  bottom: -30vmax;
+  left: -26vmax;
+  background: radial-gradient(closest-side, rgba(20, 138, 138, 0.26), rgba(20, 138, 138, 0.07) 55%, transparent);
+}
+
+.home main,
+.home .closing {
+  position: relative;
+  z-index: 1;
+}
+
+.home .closing {
+  background: transparent;
+  overflow: visible;
+  padding-bottom: 104px;
+}
+
+.home .closing > .glow {
+  display: none;
+}
+
+.home .closing__grid,
+.home .closing__legal {
+  border-top: 0;
+}
+
+.home .closing__legal {
+  padding-top: 0;
+}
+
+/* Hero loopt zonder rand over in de achtergrond */
+.take-hero {
+  background: var(--c-bg);
+}
+
+.take-hero .hero__shade {
+  background: radial-gradient(70% 55% at 82% 8%, rgba(255, 170, 90, 0.16), transparent 70%),
+    linear-gradient(to top, #202020 0%, rgba(32, 32, 32, 0.84) 22%, rgba(26, 25, 24, 0.28) 56%, rgba(26, 25, 24, 0.5) 100%);
+}
+
+.take-hero__inner {
+  padding-bottom: clamp(104px, 13vh, 128px);
+}
+
+@media (max-width: 639px) {
+  .take-hero__inner {
+    padding-bottom: 92px;
+  }
+}
+
+/* ---------- Viewfinder en HUD lopen de hele pagina mee ---------- */
+.take-frame {
+  position: fixed;
+  z-index: 30;
+  inset: calc(var(--nav-top) + var(--nav-h) + 16px) calc(var(--gut) * 0.4) 20px;
+}
+
+.take-frame i {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.take-hud {
+  position: fixed;
+  z-index: 31;
+  left: calc(var(--gut) * 0.4 + 20px);
+  right: calc(var(--gut) * 0.4 + 20px);
+  bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  pointer-events: none;
+}
+
+.take-hud__rec,
+.take-hud__scene {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  border-radius: var(--r-pill);
+  background: rgba(20, 19, 18, 0.78);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.take-hud__rec {
+  gap: 2px;
+  padding: 0 16px;
+}
+
+.take-hud__rec:has(.hero__pause:not([hidden])) {
+  padding-right: 0;
+}
+
+.take-hud__scene {
+  padding: 0 18px;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.86);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .take-hud .rec__dot {
+    animation: rec-blink 1.6s steps(1) infinite;
+  }
+}
+
+@keyframes rec-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (max-width: 639px) {
+  .take-frame {
+    inset: calc(var(--nav-top) + var(--nav-h) + 10px) 8px 10px;
+    --vf-size: 16px;
+  }
+
+  .take-hud {
+    left: 18px;
+    right: 18px;
+    bottom: 20px;
+  }
+
+  .take-hud__rec,
+  .take-hud__scene {
+    min-height: 36px;
+    font-size: 0.75rem;
+  }
+
+  .take-hud .rec {
+    font-size: 0.75rem;
+    gap: 8px;
+  }
+
+  .take-hud__rec {
+    padding: 0 12px;
+  }
+
+  .take-hud__scene {
+    padding: 0 12px;
+  }
+}
+
+/* ---------- Overgangen (alleen actief als GSAP geladen is: html.take-on) ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  /* De volgende scène schuift een stuk over de vorige heen */
+  .take-on .scene + .scene {
+    margin-top: -9svh;
+  }
+
+  .take-on .reel,
+  .take-on .player,
+  .take-on .figure {
+    will-change: clip-path, filter, opacity;
+  }
+}
+
+/* Afsluiting compacter, zodat kop en footer samen in één scherm passen */
+.home .closing {
+  padding-top: clamp(96px, 12vh, 120px);
+}
+
+.home .closing__cta {
+  padding-bottom: clamp(40px, 6vh, 64px);
+}
+
+.home .closing__grid {
+  padding-top: var(--s-5);
+}
+
+.home .closing__legal {
+  margin-top: var(--s-5);
+}
+
+/* Hero vloeit onderaan weg in de doorlopende achtergrond (geen harde rand) */
+.take-hero {
+  background: transparent;
+}
+
+.take-hero .hero__media,
+.take-hero .hero__shade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+/* ==========================================================================
+   FASE 3 — Zwevende panelen bij "Laatste werk"
+   De afbeeldingen zijn de statische versie; work-3d.js leest hun plek en
+   maat en tekent er 3D-panelen overheen (.float.is-3d).
+   ========================================================================== */
+.work-stage .player {
+  position: relative;
+  z-index: 1;
+}
+
+.float {
+  position: absolute;
+  z-index: 0;
+  top: -9%;
+  bottom: -9%;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  pointer-events: none;
+}
+
+.float__item {
+  position: absolute;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-line);
+  background: #151515;
+  box-shadow: 0 40px 70px -40px rgba(0, 0, 0, 0.95);
+  transition: opacity 600ms var(--ease);
+}
+
+.float__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Verder weg = donkerder */
+.float__item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #202020;
+  opacity: var(--dim, 0);
+}
+
+.float__item--a {
+  width: 17vw;
+  aspect-ratio: 3 / 4;
+  left: 3.5vw;
+  top: 34%;
+  transform: rotate(-3deg);
+  --dim: 0.1;
+}
+
+.float__item--b {
+  width: 15vw;
+  aspect-ratio: 3 / 2;
+  left: 8vw;
+  top: 0;
+  transform: rotate(2deg);
+  --dim: 0.36;
+}
+
+.float__item--c {
+  width: 16vw;
+  aspect-ratio: 3 / 4;
+  right: 4vw;
+  top: 4%;
+  transform: rotate(3deg);
+  --dim: 0.16;
+}
+
+.float__item--d {
+  width: 18vw;
+  aspect-ratio: 4 / 3;
+  right: 6.5vw;
+  bottom: 0;
+  transform: rotate(-2deg);
+  --dim: 0.3;
+}
+
+.float__canvas {
+  position: absolute;
+  left: 0;
+  top: -45%;
+  width: 100%;
+  height: 190%;
+  opacity: 0;
+  transition: opacity 600ms var(--ease);
+}
+
+.float.is-3d .float__canvas {
+  opacity: 1;
+}
+
+.float.is-3d .float__item {
+  opacity: 0;
+}
+
+@media (max-width: 899px) {
+  /* Telefoon: panelen steken boven en onder de speler uit */
+  .work-stage {
+    padding-block: 26vw;
+  }
+
+  .float {
+    top: 0;
+    bottom: 0;
+  }
+
+  .float__item--a {
+    width: 34vw;
+    left: 3vw;
+    top: 0;
+  }
+
+  .float__item--b {
+    width: 34vw;
+    left: auto;
+    right: 6vw;
+    top: 5vw;
+  }
+
+  .float__item--c {
+    width: 30vw;
+    right: 4vw;
+    top: auto;
+    bottom: 0;
+  }
+
+  .float__item--d {
+    width: 40vw;
+    right: auto;
+    left: 5vw;
+    bottom: 3vw;
+  }
+}
