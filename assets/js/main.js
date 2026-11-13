@@ -9,6 +9,12 @@ import { initMicro, motion } from './micro.js';
 
 document.documentElement.classList.add('js');
 
+// Schone adressen: wie nog op /portfolio.html binnenkomt, ziet /portfolio in de adresbalk
+if (location.protocol.startsWith('http') && /\.html$/.test(location.pathname)) {
+  const clean = location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+  history.replaceState(null, '', clean + location.search + location.hash);
+}
+
 initNav();
 initMicro();
 

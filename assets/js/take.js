@@ -96,6 +96,11 @@ function buildDesktop(gsap, ScrollTrigger) {
     ['top 80%', 'top 22%']
   );
 
+  // Documentaire: beeld trekt scherp
+  enter('#documentaire', q('#documentaire .scene__head'), ...fadeRise);
+  enter('#documentaire', q('#documentaire .docu-stage'), ...focusPull, ['top 78%', 'top 26%']);
+  enter('#documentaire', q('#documentaire .more'), { opacity: 0 }, { opacity: 1 }, ['top 45%', 'top 25%']);
+
   // 03 Resultaat: cijfers trekken scherp (focus-pull)
   enter('#resultaat', q('#resultaat .scene__head'), ...focusPull);
   enter('#resultaat', q('#resultaat .figure'), focusPull[0], { ...focusPull[1], stagger: 0.1 }, ['top 75%', 'top 25%']);
@@ -137,7 +142,7 @@ function buildDesktop(gsap, ScrollTrigger) {
 function buildMobile(gsap) {
   // Lichte variant: geen blur, geen vastgezette hero, alleen fade en een korte verschuiving
   gsap.utils.toArray('.scene, #afsluiting').forEach((scene) => {
-    const parts = scene.querySelectorAll('.scene__head, .reel, .figures, .more, .work-stage, .shots > li, .closing__cta');
+    const parts = scene.querySelectorAll('.scene__head, .reel, .docu-stage, .figures, .more, .work-stage, .shots > li, .closing__cta');
     parts.forEach((part) => {
       gsap.fromTo(
         part,
@@ -219,6 +224,8 @@ function initHomeLinks() {
     link.addEventListener('click', (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
       event.preventDefault();
+      // Een anker zoals #aanbod verdwijnt uit de adresbalk
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
       if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 });
       else window.scrollTo({ top: 0, behavior: motion.reduced ? 'auto' : 'smooth' });
     });

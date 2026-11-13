@@ -83,7 +83,7 @@ export function openModal({ kind, src, poster, alt, label, title, summary, trigg
   if (kind === 'video') {
     const row = element('div', 'btn-row');
     const cta = element('a', 'btn btn--primary', 'Plan een kennismaking');
-    cta.href = 'contact.html';
+    cta.href = 'contact';
     row.append(cta);
     parts.push(row);
   }

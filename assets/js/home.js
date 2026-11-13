@@ -128,9 +128,31 @@ function initWorkPanels() {
   observer.observe(root);
 }
 
+/**
+ * YouTube-video: de speler van YouTube laadt pas na een klik op afspelen.
+ * Tot die tijd staat alleen de eigen thumbnail er.
+ */
+function initYouTube() {
+  document.querySelectorAll('[data-youtube]').forEach((player) => {
+    const button = player.querySelector('[data-youtube-play]');
+    if (!button) return;
+    button.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${player.dataset.youtube}?autoplay=1&rel=0`;
+      frame.title = player.dataset.title || 'YouTube-video';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      player.classList.add('is-playing');
+      player.append(frame);
+      frame.focus({ preventScroll: true });
+    });
+  });
+}
+
 export function initHome() {
   initShowreel();
   initReels();
+  initYouTube();
   initTake();
   initWorkPanels();
 }
