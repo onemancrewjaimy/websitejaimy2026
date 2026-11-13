@@ -137,7 +137,6 @@
   background: linear-gradient(to top, rgba(18, 17, 16, 0.94) 0%, rgba(18, 17, 16, 0.62) 30%, rgba(18, 17, 16, 0) 62%);
 }
 
-.reel .viewfinder,
 .reel__rec {
   opacity: 0;
   transition: opacity 180ms var(--ease);
@@ -151,7 +150,6 @@
   pointer-events: none;
 }
 
-.reel.is-active .viewfinder,
 .reel.is-active .reel__rec {
   opacity: 1;
 }
@@ -476,17 +474,7 @@
   }
 }
 
-/* ---------- Viewfinder en HUD lopen de hele pagina mee ---------- */
-.take-frame {
-  position: fixed;
-  z-index: 30;
-  inset: calc(var(--nav-top) + var(--nav-h) + 16px) calc(var(--gut) * 0.4) 20px;
-}
-
-.take-frame i {
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
+/* ---------- HUD loopt de hele pagina mee ---------- */
 .take-hud {
   position: fixed;
   z-index: 31;
@@ -544,11 +532,6 @@
 }
 
 @media (max-width: 639px) {
-  .take-frame {
-    inset: calc(var(--nav-top) + var(--nav-h) + 10px) 8px 10px;
-    --vf-size: 16px;
-  }
-
   .take-hud {
     left: 18px;
     right: 18px;
