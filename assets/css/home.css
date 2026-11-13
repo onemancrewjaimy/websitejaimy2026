@@ -750,3 +750,17 @@ html.lenis body {
     bottom: 3vw;
   }
 }
+
+/* Showreel op lage dekking: de video ligt gedimd op de donkere achtergrond,
+   zodat de kop en de knop goed leesbaar blijven. */
+.hero__video.is-on {
+  opacity: 0.45;
+}
+
+.take-hero .hero__img {
+  transition: opacity 900ms var(--ease);
+}
+
+.take-hero.has-reel .hero__img {
+  opacity: 0;
+}

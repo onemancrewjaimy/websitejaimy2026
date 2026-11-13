@@ -24,7 +24,14 @@ function initShowreel() {
 
   const start = () => {
     video.src = src;
-    video.addEventListener('playing', () => video.classList.add('is-on'), { once: true });
+    video.addEventListener(
+      'playing',
+      () => {
+        video.classList.add('is-on');
+        video.closest('[data-hero]')?.classList.add('has-reel'); // foto maakt plaats voor de video
+      },
+      { once: true }
+    );
     video.play().catch(() => {
       /* Autoplay geweigerd: de foto blijft staan. */
     });

@@ -111,16 +111,15 @@
 
   <main id="main">
     <!-- 01 SHOWREEL: schermvullende showreel, één kop, één knop.
-         PLACEHOLDER: zet de showreel op assets/video/showreel.mp4 (720p, 10-15 s,
-         zonder geluid, 3-5 MB) en vul hieronder data-src="assets/video/showreel.mp4" in.
-         Tot die tijd staat de foto er als poster. -->
+         De showreel (assets/video/showreel.mp4) speelt gedempt en op lage dekking,
+         zodat de kop leesbaar blijft. De foto is de poster tot de video speelt. -->
     <section class="hero take-hero" id="top" data-hero data-scene="Showreel" aria-labelledby="hero-heading">
       <div class="hero__media">
         <picture>
           <source type="image/webp" srcset="assets/img/bts/bts-05-sm.webp 960w, assets/img/bts/bts-05-lg.webp 1920w" sizes="(max-width: 767px) 300vw, 100vw">
           <img class="hero__img" src="assets/img/bts/bts-05.jpg" alt="Cameraman achter een broadcastcamera in een concertzaal met warm verlichte houten wanden" width="2000" height="1500" fetchpriority="high" decoding="async">
         </picture>
-        <video class="hero__video" data-hero-video data-src="" autoplay muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+        <video class="hero__video" data-hero-video data-src="assets/video/showreel.mp4" autoplay muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="hero__shade" aria-hidden="true"></div>
       <div class="wrap take-hero__inner">
@@ -132,8 +131,7 @@
     </section>
 
     <!-- 02 DIENSTEN: drie videokaarten, spelen af bij hover of tik.
-         PLACEHOLDER per kaart: zet een korte loop (5-8 s, zonder geluid, max 1-2 MB) op
-         het genoemde pad en vul data-src in. De foto blijft de poster. -->
+         Eén kaart tegelijk; de foto is de poster. -->
     <section class="scene" id="aanbod" data-scene="Diensten" aria-labelledby="aanbod-heading">
       <div class="wrap">
         <div class="scene__head">
@@ -144,8 +142,8 @@
           <article class="reel" data-reel>
             <button type="button" class="reel__media" data-reel-toggle aria-label="Speel het voorbeeld van wervingsvideo's af">
               <img src="assets/img/bts/bts-03-sm.webp" srcset="assets/img/bts/bts-03-sm.webp 720w, assets/img/bts/bts-03-lg.webp 1920w" sizes="(min-width: 900px) 30vw, 92vw" alt="" width="720" height="960" loading="lazy" decoding="async" style="object-position: 50% 62%">
-              <!-- PLACEHOLDER: assets/video/dienst-werving.mp4 -->
-              <video data-src="" muted loop playsinline preload="none" tabindex="-1"></video>
+              <!-- Speelt alleen af bij hover of tik; laadt pas op dat moment -->
+              <video data-src="assets/video/dienst-werving.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
             </button>
             <span class="rec reel__rec" aria-hidden="true"><span class="rec__dot"></span>REC</span>
             <div class="reel__info">
@@ -159,8 +157,8 @@
           <article class="reel" data-reel>
             <button type="button" class="reel__media" data-reel-toggle aria-label="Speel het voorbeeld van info- en instructievideo's af">
               <img src="assets/img/bts/bts-06-sm.webp" srcset="assets/img/bts/bts-06-sm.webp 720w, assets/img/bts/bts-06-lg.webp 1920w" sizes="(min-width: 900px) 30vw, 92vw" alt="" width="720" height="960" loading="lazy" decoding="async" style="object-position: 50% 30%">
-              <!-- PLACEHOLDER: assets/video/dienst-instructie.mp4 -->
-              <video data-src="" muted loop playsinline preload="none" tabindex="-1"></video>
+              <!-- Speelt alleen af bij hover of tik; laadt pas op dat moment -->
+              <video data-src="assets/video/dienst-instructie.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
             </button>
             <span class="rec reel__rec" aria-hidden="true"><span class="rec__dot"></span>REC</span>
             <div class="reel__info">
@@ -174,8 +172,8 @@
           <article class="reel" data-reel>
             <button type="button" class="reel__media" data-reel-toggle aria-label="Speel het voorbeeld van recruitment advertenties af">
               <img src="assets/img/work/mileway-poster-sm.webp" srcset="assets/img/work/mileway-poster-sm.webp 720w, assets/img/work/mileway-poster-lg.webp 1280w" sizes="(min-width: 900px) 30vw, 92vw" alt="" width="720" height="405" loading="lazy" decoding="async" style="object-position: 52% 50%">
-              <!-- PLACEHOLDER: assets/video/dienst-advertenties.mp4 -->
-              <video data-src="" muted loop playsinline preload="none" tabindex="-1"></video>
+              <!-- Speelt alleen af bij hover of tik; laadt pas op dat moment -->
+              <video data-src="assets/video/dienst-advertenties.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
             </button>
             <span class="rec reel__rec" aria-hidden="true"><span class="rec__dot"></span>REC</span>
             <div class="reel__info">
