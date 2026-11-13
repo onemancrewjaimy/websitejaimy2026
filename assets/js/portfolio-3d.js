@@ -6,6 +6,8 @@
  * scherp, de kaarten ernaast gedraaid, kleiner en donkerder. Er is geen
  * WebGL nodig, dus de waaier werkt ook waar WebGL ontbreekt.
  *
+ * De waaier is een lus: na de laatste kaart komt de eerste weer.
+ *
  * Bediening: pijlknoppen, pijltjestoetsen, Home/End, swipe, en een klik op
  * een kaart ernaast. Een klik (of Enter) op de middelste kaart opent het
  * project. Alleen de middelste kaart zit in de tabvolgorde.
@@ -36,6 +38,8 @@ export function initFan(root) {
 
   let visible = items;
   let active = 0;
+  // Vorige plek van elke kaart, om te zien welke kaart de lus rond gaat
+  let lastOffset = new Map();
 
   root.classList.add('is-3d');
   track.scrollLeft = 0;
@@ -48,19 +52,14 @@ export function initFan(root) {
     const config = compact.matches ? LAYOUTS.compact : LAYOUTS.wide;
     const width = cardWidth();
 
-    items.forEach((item) => {
-      const index = visible.indexOf(item);
-      const button = item.querySelector('.fan-card');
-      if (index === -1) {
-        item.hidden = true;
-        return;
-      }
-      item.hidden = false;
-      const offset = index - active;
+    const total = visible.length;
+
+    // Zet één kaart op zijn plek in de waaier; forceOut verbergt hem net buiten beeld
+    const place = (item, offset, forceOut = false) => {
       const distance = Math.abs(offset);
       const step = Math.min(distance, config.reach);
       const side = Math.sign(offset);
-      const out = distance > config.reach;
+      const out = forceOut || distance > config.reach;
 
       item.style.setProperty('--x', `${side * config.x[step] * width}px`);
       item.style.setProperty('--z', `${config.z[step] - (out ? 120 : 0)}px`);
@@ -71,6 +70,35 @@ export function initFan(root) {
       item.style.setProperty('--zi', String(20 - distance));
       item.classList.toggle('is-out', out);
       item.classList.toggle('is-active', offset === 0);
+    };
+
+    items.forEach((item) => {
+      const index = visible.indexOf(item);
+      const button = item.querySelector('.fan-card');
+      if (index === -1) {
+        item.hidden = true;
+        return;
+      }
+      item.hidden = false;
+
+      // Lus: de kaarten staan in een kring, dus na de laatste komt de eerste weer
+      let offset = index - active;
+      if (total > 2) {
+        if (offset > total / 2) offset -= total;
+        else if (offset < -total / 2) offset += total;
+      }
+
+      // Een kaart die de kring rond gaat verdwijnt aan de ene kant en schuift
+      // aan de andere kant weer in beeld, in plaats van dwars door de waaier te vliegen
+      const before = lastOffset.get(item);
+      if (before !== undefined && Math.abs(offset - before) > 1) {
+        item.style.transition = 'none';
+        place(item, offset + Math.sign(offset), true);
+        void item.offsetWidth;
+        item.style.transition = '';
+      }
+      lastOffset.set(item, offset);
+      place(item, offset);
 
       button.tabIndex = offset === 0 ? 0 : -1;
       if (offset === 0) button.setAttribute('aria-current', 'true');
@@ -86,13 +114,15 @@ export function initFan(root) {
     const current = visible[active];
     if (count) count.textContent = `${active + 1} / ${visible.length}`;
     if (title) title.textContent = current.dataset.title || '';
-    if (prev) prev.disabled = active === 0;
-    if (next) next.disabled = active === visible.length - 1;
+    // In een lus kun je altijd verder, behalve met één kaart
+    if (prev) prev.disabled = total < 2;
+    if (next) next.disabled = total < 2;
   }
 
   function setActive(index, { focus = false } = {}) {
     if (!visible.length) return;
-    active = Math.min(Math.max(index, 0), visible.length - 1);
+    // Lus: voorbij de laatste kaart begint de eerste weer, en andersom
+    active = ((index % visible.length) + visible.length) % visible.length;
     layout();
     if (focus) visible[active].querySelector('.fan-card').focus({ preventScroll: true });
   }
@@ -127,6 +157,7 @@ export function initFan(root) {
     visible = category === 'alles' ? items : items.filter((item) => item.dataset.category === category);
     const start = visible.findIndex((item) => item.hasAttribute('data-start'));
     active = start !== -1 ? start : Math.floor((visible.length - 1) / 2);
+    lastOffset = new Map();
     layout();
     return visible.length;
   }

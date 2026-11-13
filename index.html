@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/flow.css">
+  <link rel="stylesheet" href="assets/css/home.css">
 
   <script type="application/ld+json">
   {
@@ -55,15 +57,15 @@
   }
   </script>
 </head>
-<body>
+<body class="home" data-home>
   <a class="skip-link" href="#main">Direct naar inhoud</a>
 
   <header class="nav" data-nav>
     <div class="nav__pill">
-      <a class="wordmark" href="./" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
+      <a class="wordmark" href="index.html" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
       <nav class="nav__links" aria-label="Hoofdnavigatie">
         <ul>
-          <li><a href="./" aria-current="page">Home</a></li>
+          <li><a href="index.html" aria-current="page">Home</a></li>
           <li><a href="#aanbod">Diensten</a></li>
           <li><a href="over-ons.html">Over Jaimy</a></li>
           <li><a href="portfolio.html">Portfolio</a></li>
@@ -78,10 +80,10 @@
     </div>
   </header>
 
-  <div class="menu" id="menu" data-menu hidden>
+  <div class="menu" id="menu" data-menu data-lenis-prevent hidden>
     <nav aria-label="Mobiele navigatie">
       <ul class="menu__list">
-        <li><a href="./" aria-current="page">Home</a></li>
+        <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="#aanbod">Diensten</a></li>
         <li><a href="over-ons.html">Over Jaimy</a></li>
         <li><a href="portfolio.html">Portfolio</a></li>
@@ -96,50 +98,182 @@
     </div>
   </div>
 
+  <!-- Eén doorlopende take: vaste achtergrond met gloed, viewfinder en HUD over de hele pagina -->
+  <div class="take-bg" aria-hidden="true"><i class="take-bg__warm"></i><i class="take-bg__cool"></i></div>
+  <div class="viewfinder take-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="take-hud">
+    <div class="take-hud__rec">
+      <span class="rec" aria-hidden="true"><span class="rec__dot"></span>REC <span data-take-timecode>00:00:00:00</span></span>
+      <button type="button" class="hero__pause" data-motion-toggle aria-pressed="false" aria-label="Beweging pauzeren">
+        <svg class="icon-pause" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg>
+        <svg class="icon-play" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1.2v11.6a.6.6 0 0 0 .9.5l9.3-5.8a.6.6 0 0 0 0-1L3.9.7a.6.6 0 0 0-.9.5z"/></svg>
+      </button>
+    </div>
+    <p class="take-hud__scene" aria-hidden="true" data-take-scene>01 / SHOWREEL</p>
+  </div>
+
   <main id="main">
-    <!-- HERO: schermvullend beeld, één kop, één knop. De 3D-scène (assets/js/hero-3d.js)
-         legt zich over de foto zodra WebGL klaar is; zonder WebGL of bij
-         prefers-reduced-motion blijft de foto staan. -->
-    <section class="hero" id="top" data-hero aria-labelledby="hero-heading">
+    <!-- 01 SHOWREEL: schermvullende showreel, één kop, één knop.
+         PLACEHOLDER: zet de showreel op assets/video/showreel.mp4 (720p, 10-15 s,
+         zonder geluid, 3-5 MB) en vul hieronder data-src="assets/video/showreel.mp4" in.
+         Tot die tijd staat de foto er als poster. -->
+    <section class="hero take-hero" id="top" data-hero data-scene="Showreel" aria-labelledby="hero-heading">
       <div class="hero__media">
         <picture>
           <source type="image/webp" srcset="assets/img/bts/bts-05-sm.webp 960w, assets/img/bts/bts-05-lg.webp 1920w" sizes="(max-width: 767px) 300vw, 100vw">
           <img class="hero__img" src="assets/img/bts/bts-05.jpg" alt="Cameraman achter een broadcastcamera in een concertzaal met warm verlichte houten wanden" width="2000" height="1500" fetchpriority="high" decoding="async">
         </picture>
-        <canvas class="hero__canvas" data-hero-canvas data-src="assets/img/bts/bts-05-lg.webp" data-src-sm="assets/img/bts/bts-05-sm.webp" aria-hidden="true"></canvas>
+        <video class="hero__video" data-hero-video data-src="" autoplay muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="hero__shade" aria-hidden="true"></div>
-      <div class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <div class="hero__hud">
-        <span class="rec" aria-hidden="true"><span class="rec__dot"></span>REC <span data-timecode>00:00:00:00</span></span>
-        <button type="button" class="hero__pause" data-motion-toggle aria-pressed="false" aria-label="Beweging pauzeren">
-          <svg class="icon-pause" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg>
-          <svg class="icon-play" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1.2v11.6a.6.6 0 0 0 .9.5l9.3-5.8a.6.6 0 0 0 0-1L3.9.7a.6.6 0 0 0-.9.5z"/></svg>
-        </button>
+      <div class="wrap take-hero__inner">
+        <h1 id="hero-heading"><span class="line"><span>Video die</span></span> <span class="line"><span>vacatures vult</span></span></h1>
+        <a class="btn btn--primary take-hero__cta" href="contact.html">Plan een kennismaking
+          <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"/></svg>
+        </a>
       </div>
-      <div class="wrap hero__inner">
-        <div class="hero__head">
-          <p class="hero__kicker">Videoproductie vanuit Limmen, voor heel Nederland</p>
-          <h1 id="hero-heading"><span class="line"><span>Video die</span></span> <span class="line"><span>vacatures vult</span></span></h1>
+    </section>
+
+    <!-- 02 DIENSTEN: drie videokaarten, spelen af bij hover of tik.
+         PLACEHOLDER per kaart: zet een korte loop (5-8 s, zonder geluid, max 1-2 MB) op
+         het genoemde pad en vul data-src in. De foto blijft de poster. -->
+    <section class="scene" id="aanbod" data-scene="Diensten" aria-labelledby="aanbod-heading">
+      <div class="wrap">
+        <div class="scene__head">
+          <h2 id="aanbod-heading">Wat ONEMANCREW voor je maakt</h2>
+          <p class="lead">Drie soorten video, elk met een concreet doel voor je bedrijf.</p>
         </div>
-        <div class="hero__side">
-          <p class="hero__lead">Wervingsvideo's, instructievideo's en recruitment advertenties. Eén keer geproduceerd, daarna blijf je ze inzetten.</p>
-          <a class="btn btn--primary" href="contact.html">Plan een kennismaking
-            <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"/></svg>
-          </a>
+        <div class="reels">
+          <article class="reel" data-reel>
+            <button type="button" class="reel__media" data-reel-toggle aria-label="Speel het voorbeeld van wervingsvideo's af">
+              <img src="assets/img/bts/bts-03-sm.webp" srcset="assets/img/bts/bts-03-sm.webp 720w, assets/img/bts/bts-03-lg.webp 1920w" sizes="(min-width: 900px) 30vw, 92vw" alt="" width="720" height="960" loading="lazy" decoding="async" style="object-position: 50% 62%">
+              <!-- PLACEHOLDER: assets/video/dienst-werving.mp4 -->
+              <video data-src="" muted loop playsinline preload="none" tabindex="-1"></video>
+            </button>
+            <div class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <span class="rec reel__rec" aria-hidden="true"><span class="rec__dot"></span>REC</span>
+            <div class="reel__info">
+              <h3>Wervingsvideo's</h3>
+              <p>Echt, zonder acteurs</p>
+              <a class="reel__link" href="portfolio.html?filter=werving" aria-label="Bekijk voorbeelden van wervingsvideo's">Bekijk voorbeelden
+                <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="reel" data-reel>
+            <button type="button" class="reel__media" data-reel-toggle aria-label="Speel het voorbeeld van info- en instructievideo's af">
+              <img src="assets/img/bts/bts-06-sm.webp" srcset="assets/img/bts/bts-06-sm.webp 720w, assets/img/bts/bts-06-lg.webp 1920w" sizes="(min-width: 900px) 30vw, 92vw" alt="" width="720" height="960" loading="lazy" decoding="async" style="object-position: 50% 30%">
+              <!-- PLACEHOLDER: assets/video/dienst-instructie.mp4 -->
+              <video data-src="" muted loop playsinline preload="none" tabindex="-1"></video>
+            </button>
+            <div class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <span class="rec reel__rec" aria-hidden="true"><span class="rec__dot"></span>REC</span>
+            <div class="reel__info">
+              <h3>Info- en instructievideo's</h3>
+              <p>Eén keer uitleggen</p>
+              <a class="reel__link" href="portfolio.html?filter=info" aria-label="Bekijk voorbeelden van info- en instructievideo's">Bekijk voorbeelden
+                <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="reel" data-reel>
+            <button type="button" class="reel__media" data-reel-toggle aria-label="Speel het voorbeeld van recruitment advertenties af">
+              <img src="assets/img/work/mileway-poster-sm.webp" srcset="assets/img/work/mileway-poster-sm.webp 720w, assets/img/work/mileway-poster-lg.webp 1280w" sizes="(min-width: 900px) 30vw, 92vw" alt="" width="720" height="405" loading="lazy" decoding="async" style="object-position: 52% 50%">
+              <!-- PLACEHOLDER: assets/video/dienst-advertenties.mp4 -->
+              <video data-src="" muted loop playsinline preload="none" tabindex="-1"></video>
+            </button>
+            <div class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <span class="rec reel__rec" aria-hidden="true"><span class="rec__dot"></span>REC</span>
+            <div class="reel__info">
+              <h3>Recruitment advertenties</h3>
+              <p>Opvallen op social</p>
+              <a class="reel__link" href="portfolio.html?filter=advertenties" aria-label="Bekijk voorbeelden van recruitment advertenties">Bekijk voorbeelden
+                <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"/></svg>
+              </a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- LAATSTE WERK -->
-    <section class="section" id="werk" aria-labelledby="werk-heading">
-      <div class="glow" aria-hidden="true"></div>
+    <!-- 03 RESULTAAT: problemen en resultaten in één rij met grote cijfers -->
+    <section class="scene" id="resultaat" data-scene="Resultaat" aria-labelledby="resultaat-heading">
       <div class="wrap">
-        <div class="section__head">
-          <h2 id="werk-heading">Laatste werk</h2>
-          <p class="lead">Bekijk eerst het resultaat, lees daarna pas verder.</p>
+        <div class="scene__head">
+          <h2 id="resultaat-heading">Wat video je oplevert</h2>
+          <p class="lead">Geen garanties, maar de richting die klanten vaak zien na een goede video.</p>
         </div>
-        <div class="work__stage">
+        <ul class="figures">
+          <li class="figure">
+            <p class="figure__num">100<small>%</small></p>
+            <p class="figure__note">betere kandidaten</p>
+            <p class="tag">Wervingsvideo</p>
+          </li>
+          <li class="figure">
+            <p class="figure__num">5,5<small>uur</small></p>
+            <p class="figure__note">per week</p>
+            <p class="tag">Instructievideo</p>
+          </li>
+          <li class="figure">
+            <p class="figure__num">75<small>%</small></p>
+            <p class="figure__note">van de kennis blijft behouden</p>
+            <p class="tag">Instructievideo</p>
+          </li>
+          <li class="figure">
+            <p class="figure__num">100<small>%</small></p>
+            <p class="figure__note">zelfverzekerd starten</p>
+            <p class="tag">Wervingsvideo</p>
+          </li>
+        </ul>
+        <details class="more">
+          <summary class="more__toggle"><span class="more__closed">Meer lezen</span><span class="more__open">Minder lezen</span></summary>
+          <div class="more__body">
+            <div>
+              <h3 class="more__title">Drie herkenbare problemen</h3>
+              <ul class="more__list">
+                <li><strong>Vacatures blijven te lang openstaan.</strong> Elke week zonder de juiste kandidaat kost geld en zet druk op de rest van je team.</li>
+                <li><strong>Onboarding kost collega's te veel tijd.</strong> Nieuwe medewerkers vragen om uitleg die je beste mensen van hun werk houdt.</li>
+                <li><strong>Instructies en handleidingen worden niet gelezen.</strong> Belangrijke kennis staat wel op papier, maar bereikt in de praktijk bijna niemand.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="more__title">Wat de cijfers betekenen</h3>
+              <ul class="more__list">
+                <li><strong>Meer sollicitaties op je vacature.</strong> Kandidaten die vooraf weten wat de functie inhoudt, solliciteren sneller en passen beter bij de rol.</li>
+                <li><strong>Minder tijd kwijt aan mondelinge uitleg.</strong> Een instructievideo legt het één keer goed uit, in plaats van dat collega's het steeds opnieuw moeten doen.</li>
+                <li><strong>Minder kennisverlies door personeelsverloop.</strong> Kennis van vertrekkende medewerkers gaat niet verloren, maar staat vast op video voor iedereen die na hen komt.</li>
+                <li><strong>Minder verloop door realistische verwachtingen.</strong> Nieuwe medewerkers weten al voor hun eerste werkdag wat ze kunnen verwachten. Dat scheelt teleurstellingen achteraf.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 04 WERK: laatste werk. In fase 3 komen hier de zwevende 3D-panelen omheen. -->
+    <section class="scene" id="werk" data-scene="Werk" aria-labelledby="werk-heading">
+      <div class="wrap">
+        <div class="scene__head scene__head--row">
+          <div>
+            <h2 id="werk-heading">Laatste werk</h2>
+            <p class="lead">Welkomstvideo voor nieuwe klanten die net zijn begonnen bij Mileway.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn--secondary" href="portfolio.html#project-05">Bekijk het project</a>
+            <a class="link" href="portfolio.html">Bekijk al het werk</a>
+          </div>
+        </div>
+        <div class="work-stage" data-work-stage>
+          <!-- Zwevende panelen uit het portfolio. Dit is de statische versie; op apparaten die het
+               aankunnen zet assets/js/work-3d.js er 3D-panelen voor in de plaats.
+               PLACEHOLDER: geef een paneel data-video="assets/video/paneel-1.mp4" (korte loop,
+               zonder geluid, max 1 MB) om er een bewegend videopaneel van te maken. -->
+          <ul class="float" data-float aria-hidden="true">
+            <li class="float__item float__item--a" data-float-item data-depth="-140" data-turn="16" data-focus="50 62" data-video=""><img src="assets/img/bts/bts-03-sm.webp" alt="" width="720" height="960" loading="lazy" decoding="async" style="object-position: 50% 62%"></li>
+            <li class="float__item float__item--b" data-float-item data-depth="-520" data-turn="22" data-focus="55 50" data-video=""><img src="assets/img/bts/bts-04-sm.webp" alt="" width="800" height="533" loading="lazy" decoding="async" style="object-position: 55% 50%"></li>
+            <li class="float__item float__item--c" data-float-item data-depth="-220" data-turn="-16" data-focus="50 35" data-video=""><img src="assets/img/bts/bts-06-sm.webp" alt="" width="720" height="960" loading="lazy" decoding="async" style="object-position: 50% 35%"></li>
+            <li class="float__item float__item--d" data-float-item data-depth="-420" data-turn="-22" data-focus="38 45" data-video=""><img src="assets/img/bts/bts-05-sm.webp" alt="" width="960" height="720" loading="lazy" decoding="async" style="object-position: 38% 45%"></li>
+          </ul>
           <div class="player" data-player>
             <video preload="none" playsinline controls poster="assets/img/work/mileway-poster.jpg" aria-label="Onboardingvideo voor Mileway">
               <source src="assets/video/mileway-onboarding.mp4" type="video/mp4">
@@ -153,167 +287,35 @@
               <span class="player__disc"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3.5v17a1 1 0 0 0 1.5.9l14-8.5a1 1 0 0 0 0-1.8l-14-8.5A1 1 0 0 0 6 3.5z"/></svg></span>
             </button>
           </div>
-          <article class="glass card work__card">
-            <p class="tag">Onboardingvideo</p>
-            <h3>Mileway</h3>
-            <p>Welkomstvideo voor nieuwe klanten die net zijn begonnen bij Mileway.</p>
-            <a class="btn btn--secondary" href="portfolio.html#project-05">Bekijk het project</a>
-            <a class="link" href="portfolio.html">Bekijk al het werk</a>
-          </article>
         </div>
       </div>
     </section>
 
-    <!-- HET PROBLEEM -->
-    <section class="section" id="problemen" aria-labelledby="problemen-heading">
-      <div class="glow glow--left" aria-hidden="true"></div>
+    <!-- 05 WERKWIJZE: vier stappen, elk één regel -->
+    <section class="scene" id="werkwijze" data-scene="Werkwijze" aria-labelledby="werkwijze-heading">
       <div class="wrap">
-        <div class="split">
-          <div class="split__text">
-            <div class="section__head">
-              <h2 id="problemen-heading">Drie herkenbare problemen</h2>
-              <p class="lead">Ze kosten de meeste bedrijven onnodig veel tijd en geld. Een goed gemaakte video lost ze alle drie op.</p>
-            </div>
-            <ul class="rows">
-              <li>
-                <h3>Vacatures blijven te lang openstaan</h3>
-                <p>Elke week zonder de juiste kandidaat kost geld en zet druk op de rest van je team.</p>
-              </li>
-              <li>
-                <h3>Onboarding kost collega's te veel tijd</h3>
-                <p>Nieuwe medewerkers vragen om uitleg die je beste mensen van hun werk houdt.</p>
-              </li>
-              <li>
-                <h3>Instructies en handleidingen worden niet gelezen</h3>
-                <p>Belangrijke kennis staat wel op papier, maar bereikt in de praktijk bijna niemand.</p>
-              </li>
-            </ul>
-          </div>
-          <div class="frame split__media">
-            <picture>
-              <source type="image/webp" srcset="assets/img/bts/bts-03-sm.webp 720w, assets/img/bts/bts-03-lg.webp 1920w" sizes="(min-width: 1024px) 32vw, 100vw">
-              <img src="assets/img/bts/bts-03.jpg" alt="Interviewopstelling in een woonkamer met camera op statief en twee lichtpanelen" width="1500" height="2000" loading="lazy" decoding="async" style="object-position: 50% 62%">
-            </picture>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HET RESULTAAT -->
-    <section class="section" id="resultaat" aria-labelledby="resultaat-heading">
-      <div class="glow glow--low" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="results">
-          <div class="results__intro">
-            <h2 id="resultaat-heading">Wat video je oplevert</h2>
-            <p class="lead">Eenmaal gemaakt, eindeloos inzetbaar. Geen garanties, maar de richting die klanten vaak zien na een goede video.</p>
-            <div class="results__payback">
-              <h3>Video betaalt zichzelf terug</h3>
-              <p>Een goede video kost eenmalig tijd en budget. Daarna werkt hij dag en nacht door: op je website, op LinkedIn, in elke vacaturetekst en bij elke nieuwe medewerker die instructie nodig heeft.</p>
-              <p>Vergelijk dat met keer op keer dezelfde uitleg geven aan elke nieuwe medewerker.</p>
-            </div>
-          </div>
-          <div class="results__cards">
-            <article class="glass card stat">
-              <p class="tag">Wervingsvideo</p>
-              <p class="stat__figure"><span class="stat__num">100%</span> <span class="stat__note">betere kandidaten</span></p>
-              <h3>Meer sollicitaties op je vacature</h3>
-              <p>Kandidaten die vooraf weten wat de functie inhoudt, solliciteren sneller en passen beter bij de rol.</p>
-            </article>
-            <article class="glass card stat">
-              <p class="tag">Instructievideo</p>
-              <p class="stat__figure"><span class="stat__num">5,5 uur</span> <span class="stat__note">per week</span></p>
-              <h3>Minder tijd kwijt aan mondelinge uitleg</h3>
-              <p>Een instructievideo legt het één keer goed uit, in plaats van dat collega's het steeds opnieuw moeten doen.</p>
-            </article>
-            <article class="glass card stat">
-              <p class="tag">Instructievideo</p>
-              <p class="stat__figure"><span class="stat__num">75%</span> <span class="stat__note">van de kennis blijft behouden</span></p>
-              <h3>Minder kennisverlies door personeelsverloop</h3>
-              <p>Kennis van vertrekkende medewerkers gaat niet verloren, maar staat vast op video voor iedereen die na hen komt.</p>
-            </article>
-            <article class="glass card stat">
-              <p class="tag">Wervingsvideo</p>
-              <p class="stat__figure"><span class="stat__num">100%</span> <span class="stat__note">zelfverzekerd starten</span></p>
-              <h3>Minder verloop door realistische verwachtingen</h3>
-              <p>Nieuwe medewerkers weten al voor hun eerste werkdag wat ze kunnen verwachten. Dat scheelt teleurstellingen achteraf.</p>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- AANBOD -->
-    <section class="section" id="aanbod" aria-labelledby="aanbod-heading">
-      <div class="glow" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="section__head">
-          <h2 id="aanbod-heading">Wat ONEMANCREW voor je maakt</h2>
-          <p class="lead">Drie soorten video, elk met een concreet doel voor je bedrijf.</p>
-        </div>
-        <div class="offer">
-          <article class="glass card offer__card">
-            <h3>Wervingsvideo's</h3>
-            <p class="offer__flag">Laat zien hoe het écht is</p>
-            <p>Een video van 2 tot 4 minuten waarin je team, je werkplek en de functie zelf aan het woord komen. Kandidaten weten meteen of ze bij jullie passen, nog voordat ze solliciteren.</p>
-            <ul class="offer__list">
-              <li>Hoofdvideo van 2 tot 4 minuten voor je vacature- of werkenbij-pagina</li>
-              <li>Ongeveer 4 shorts voor LinkedIn en Instagram</li>
-              <li>Echte collega's in beeld, geen acteurs of stockbeelden</li>
-            </ul>
-            <a class="btn btn--secondary btn--sm" href="portfolio.html?filter=werving" aria-label="Bekijk voorbeelden van wervingsvideo's">Bekijk voorbeelden</a>
-          </article>
-          <article class="glass card offer__card">
-            <h3>Info- en instructievideo's</h3>
-            <p class="offer__flag">Eén keer uitleggen, altijd beschikbaar</p>
-            <p>Processen, werkwijzen en vakkennis helder vastgelegd in 2 tot 4 minuten. Nieuwe medewerkers kijken het terug wanneer ze willen, en collega's hoeven niet steeds hetzelfde uit te leggen.</p>
-            <ul class="offer__list">
-              <li>Hoofdvideo van 2 tot 4 minuten, stap voor stap opgebouwd</li>
-              <li>Ongeveer 4 korte clips die per onderdeel terug te vinden zijn</li>
-              <li>Kennis blijft binnen het bedrijf, ook als iemand vertrekt</li>
-            </ul>
-            <a class="btn btn--secondary btn--sm" href="portfolio.html?filter=info" aria-label="Bekijk voorbeelden van info- en instructievideo's">Bekijk voorbeelden</a>
-          </article>
-          <article class="glass card offer__card">
-            <h3>Recruitment advertenties</h3>
-            <p class="offer__flag">Opvallen in de tijdlijn</p>
-            <p>Korte advertenties van 15 tot 30 seconden, gemaakt om te adverteren op social media. Geen losse hoofdvideo: de kracht zit in de eerste seconden, die kandidaten direct naar je vacature sturen.</p>
-            <ul class="offer__list">
-              <li>3 tot 5 advertentieversies van 15 tot 30 seconden, staand en vierkant</li>
-              <li>Opgebouwd om al in de eerste seconden de aandacht te trekken</li>
-              <li>Klaar voor gebruik op LinkedIn, Instagram en Facebook</li>
-            </ul>
-            <a class="btn btn--secondary btn--sm" href="portfolio.html?filter=advertenties" aria-label="Bekijk voorbeelden van recruitment advertenties">Bekijk voorbeelden</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- WERKWIJZE -->
-    <section class="section" id="werkwijze" aria-labelledby="werkwijze-heading">
-      <div class="wrap">
-        <div class="section__head">
+        <div class="scene__head">
           <h2 id="werkwijze-heading">Van kennismaking tot oplevering</h2>
           <p class="lead">Vier stappen, met mij als vast aanspreekpunt van het eerste gesprek tot de definitieve video.</p>
         </div>
-        <ol class="steps">
-          <li class="glass card">
-            <span class="steps__num" aria-hidden="true">01</span>
+        <ol class="shots">
+          <li>
+            <span class="shots__num" aria-hidden="true">01</span>
             <h3>Kennismaking</h3>
             <p>Ik bespreek je doel, je doelgroep en de boodschap die moet landen.</p>
           </li>
-          <li class="glass card">
-            <span class="steps__num" aria-hidden="true">02</span>
+          <li>
+            <span class="shots__num" aria-hidden="true">02</span>
             <h3>Concept en script</h3>
             <p>Je krijgt een concreet plan en script, geen verrassingen achteraf.</p>
           </li>
-          <li class="glass card">
-            <span class="steps__num" aria-hidden="true">03</span>
+          <li>
+            <span class="shots__num" aria-hidden="true">03</span>
             <h3>Opname</h3>
             <p>Op locatie of in de studio, inclusief dronebeeld waar dat waarde toevoegt.</p>
           </li>
-          <li class="glass card">
-            <span class="steps__num" aria-hidden="true">04</span>
+          <li>
+            <span class="shots__num" aria-hidden="true">04</span>
             <h3>Montage en oplevering</h3>
             <p>Je ontvangt de video in de formaten die je nodig hebt, klaar voor gebruik.</p>
           </li>
@@ -323,7 +325,7 @@
   </main>
 
   <!-- AFSLUITING + FOOTER -->
-  <footer class="closing" id="afsluiting">
+  <footer class="closing" id="afsluiting" data-scene="Contact">
     <div class="glow glow--low" aria-hidden="true"></div>
     <div class="wrap">
       <div class="closing__cta">
@@ -338,15 +340,15 @@
       </div>
       <div class="closing__grid">
         <div class="closing__brand">
-          <a class="wordmark" href="./" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
+          <a class="wordmark" href="index.html" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
           <p class="closing__slogan">Masters of creative thinking.</p>
           <p class="muted">Video die vacatures sneller vult, onboarding verlicht en kennis vasthoudt. Eenmalig gemaakt, blijvend inzetbaar.</p>
         </div>
         <div>
           <h3>Navigatie</h3>
           <ul class="closing__list">
-            <li><a href="./">Home</a></li>
-            <li><a href="./#aanbod">Diensten</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#aanbod">Diensten</a></li>
             <li><a href="over-ons.html">Over Jaimy</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li><a href="contact.html">Contact</a></li>

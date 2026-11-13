@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/flow.css">
 
   <script type="application/ld+json">
   {
@@ -55,16 +56,16 @@
   }
   </script>
 </head>
-<body>
+<body class="flow">
   <a class="skip-link" href="#main">Direct naar inhoud</a>
 
   <header class="nav" data-nav>
     <div class="nav__pill">
-      <a class="wordmark" href="./" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
+      <a class="wordmark" href="index.html" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
       <nav class="nav__links" aria-label="Hoofdnavigatie">
         <ul>
-          <li><a href="./">Home</a></li>
-          <li><a href="./#aanbod">Diensten</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#aanbod">Diensten</a></li>
           <li><a href="over-ons.html">Over Jaimy</a></li>
           <li><a href="portfolio.html" aria-current="page">Portfolio</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -81,8 +82,8 @@
   <div class="menu" id="menu" data-menu hidden>
     <nav aria-label="Mobiele navigatie">
       <ul class="menu__list">
-        <li><a href="./">Home</a></li>
-        <li><a href="./#aanbod">Diensten</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#aanbod">Diensten</a></li>
         <li><a href="over-ons.html">Over Jaimy</a></li>
         <li><a href="portfolio.html" aria-current="page">Portfolio</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -96,6 +97,7 @@
     </div>
   </div>
 
+  <div class="take-bg" aria-hidden="true"><i class="take-bg__warm"></i><i class="take-bg__cool"></i></div>
   <main id="main">
     <!-- PORTFOLIO: 3D-kaartenwaaier (assets/js/portfolio-3d.js) met filters (assets/js/filters.js).
 
@@ -185,11 +187,11 @@
       </div>
 
       <div class="wrap">
-        <div class="glass fan__bar" data-fan-bar>
+        <div class="fan__bar" data-fan-bar>
           <button type="button" class="fan__arrow" data-fan-prev aria-label="Vorige kaart">
             <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4L6 9l5 5"/></svg>
           </button>
-          <p class="fan__status" aria-live="polite"><span class="fan__count" data-fan-count>3 / 5</span> <span class="fan__title" data-fan-title>Mileway</span></p>
+          <p class="fan__status visually-hidden" aria-live="polite"><span class="fan__count" data-fan-count>3 / 5</span> <span class="fan__title" data-fan-title>Mileway</span></p>
           <button type="button" class="fan__arrow" data-fan-next aria-label="Volgende kaart">
             <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l5 5-5 5"/></svg>
           </button>
@@ -213,15 +215,15 @@
       </div>
       <div class="closing__grid">
         <div class="closing__brand">
-          <a class="wordmark" href="./" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
+          <a class="wordmark" href="index.html" aria-label="ONEMANCREW, naar de homepage">ONE<span>MAN</span>CREW</a>
           <p class="closing__slogan">Masters of creative thinking.</p>
           <p class="muted">Video die vacatures sneller vult, onboarding verlicht en kennis vasthoudt. Eenmalig gemaakt, blijvend inzetbaar.</p>
         </div>
         <div>
           <h3>Navigatie</h3>
           <ul class="closing__list">
-            <li><a href="./">Home</a></li>
-            <li><a href="./#aanbod">Diensten</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#aanbod">Diensten</a></li>
             <li><a href="over-ons.html">Over Jaimy</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li><a href="contact.html">Contact</a></li>

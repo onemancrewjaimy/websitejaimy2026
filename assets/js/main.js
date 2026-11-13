@@ -34,6 +34,31 @@ if (hero && hero.querySelector('[data-hero-canvas]')) {
   observer.observe(hero);
 }
 
+if (document.querySelector('[data-home]')) {
+  import('./home.js').then(({ initHome }) => initHome());
+}
+
+// Andere pagina's: de gloed in de achtergrond beweegt mee met het scrollen
+const flowBg = document.querySelector('.flow .take-bg');
+if (flowBg && !motion.reduced) {
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    flowBg.style.setProperty('--flow', max > 0 ? (window.scrollY / max).toFixed(4) : '0');
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    },
+    { passive: true }
+  );
+  update();
+}
+
 const fan = document.querySelector('[data-fan]');
 if (fan) {
   Promise.all([import('./portfolio-3d.js'), import('./filters.js')]).then(([{ initFan }, { initFilters }]) => {
