@@ -209,8 +209,25 @@ async function initMotion() {
   ScrollTrigger.refresh();
 }
 
+/**
+ * Logo en "Home" wijzen naar de pagina waar je al bent. Zonder dit herlaadt de
+ * browser en zet hij je terug op dezelfde scrollpositie, waardoor het lijkt
+ * alsof de knop niets doet. Nu scrollt de pagina terug naar boven.
+ */
+function initHomeLinks() {
+  document.querySelectorAll('a[href="./"], a[href="index.html"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      event.preventDefault();
+      if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 });
+      else window.scrollTo({ top: 0, behavior: motion.reduced ? 'auto' : 'smooth' });
+    });
+  });
+}
+
 export function initTake() {
   initHud();
+  initHomeLinks();
   if (motion.reduced) return;
   initMotion().catch(() => {
     /* Laadfout: de pagina blijft staan zonder overgangen. */

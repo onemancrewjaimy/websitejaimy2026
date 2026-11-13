@@ -1,0 +1,105 @@
+/* ONEMANCREW — doorlopende achtergrond
+   Eén vaste achtergrond achter de hele pagina, met een oranje en teal gloed
+   die meebeweegt met het scrollen. Geen kleurwissels of lijnen tussen secties.
+   Homepage: de gloed wordt gestuurd door take.js (GSAP). Andere pagina's
+   (body.flow): door main.js via de variabele --flow (0 bovenaan, 1 onderaan). */
+
+.take-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--c-bg);
+}
+
+.take-bg i {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.take-bg__warm {
+  width: 78vmax;
+  aspect-ratio: 1;
+  top: -34vmax;
+  right: -30vmax;
+  background: radial-gradient(closest-side, rgba(208, 115, 53, 0.34), rgba(208, 115, 53, 0.1) 55%, transparent);
+}
+
+.take-bg__cool {
+  width: 62vmax;
+  aspect-ratio: 1;
+  bottom: -30vmax;
+  left: -26vmax;
+  background: radial-gradient(closest-side, rgba(20, 138, 138, 0.26), rgba(20, 138, 138, 0.07) 55%, transparent);
+}
+
+/* ---------- Andere pagina's ---------- */
+.flow main,
+.flow .closing {
+  position: relative;
+  z-index: 1;
+}
+
+.flow .take-bg__warm {
+  transform: translate3d(calc(var(--flow, 0) * -58vw), calc(var(--flow, 0) * 62vh), 0);
+}
+
+.flow .take-bg__cool {
+  transform: translate3d(calc(var(--flow, 0) * 64vw), calc(var(--flow, 0) * -58vh), 0);
+}
+
+/* De losse gloed per sectie vervalt: er is er nog maar één */
+.flow .section > .glow,
+.flow .fanpage > .glow,
+.flow .closing > .glow {
+  display: none;
+}
+
+.flow .closing {
+  background: transparent;
+  overflow: visible;
+}
+
+.flow .fanpage {
+  background: transparent;
+}
+
+.flow .closing__grid,
+.flow .closing__legal {
+  border-top: 0;
+}
+
+.flow .closing__legal {
+  padding-top: 0;
+}
+
+/* Hero met foto vloeit onderaan weg in de achtergrond */
+.flow .hero {
+  background: transparent;
+}
+
+.flow .hero .hero__media,
+.flow .hero .hero__shade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+/* ---------- Portfolio: alleen twee knoppen onder de waaier ---------- */
+.flow .fan__bar {
+  min-width: 0;
+  gap: var(--s-3);
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.flow .fan__arrow {
+  width: 52px;
+  height: 52px;
+  background: rgba(20, 19, 18, 0.6);
+}
